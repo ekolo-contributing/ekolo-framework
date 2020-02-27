@@ -1,0 +1,28 @@
+{
+    "name": "ekolo/ekolo-framework",
+    "description": "Framework PHP",
+    "type": "library",
+    "require": {
+        "ekolo/eko-http": "^0.2.0",
+        "ekolo/eko-routing": "^0.2.1",
+        "ekolo/eko-helpers": "^0.3.1"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Don de Dieu BOLENGE",
+            "email": "dondedieubolenge@gmail.com",
+            "role": "Développeur"
+        },
+        {
+            "name": "Josué Mbuyu",
+            "email": "josuembuyu94@gmail.com",
+            "role": "Développeur"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Ekolo\\Framework\\": "src/Framework/"
+        }
+    }
+}
