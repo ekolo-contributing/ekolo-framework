@@ -3,9 +3,9 @@
     "description": "Framework PHP",
     "type": "library",
     "require": {
-        "ekolo/eko-http": "^0.2.0",
         "ekolo/eko-routing": "^0.2.1",
-        "ekolo/eko-helpers": "^0.3.1"
+        "ekolo/eko-helpers": "^0.3.1",
+        "ekolo/eko-http": "^0.3.0"
     },
     "license": "MIT",
     "authors": [
@@ -21,8 +21,10 @@
         }
     ],
     "autoload": {
+        "files": ["src/Framework/Functions/helpers.php"],
         "psr-4": {
-            "Ekolo\\Framework\\": "src/Framework/"
+            "Ekolo\\Framework\\": "src/Framework/",
+            "Ekolo\\App\\": "tests/app/"
         }
     }
 }
