@@ -1,55 +1,81 @@
 <?php
-    require_once __DIR__.'./../vendor/autoload.php';
+    $app = require __DIR__.'/bootstrap/app.php';
 
-    use Ekolo\Framework\Bootstrap\Application;
-    use Ekolo\Framework\Bootstrap\Config;
-    use Ekolo\Component\Routing\Router;
-    use Ekolo\Framework\Http\Response;
-    use Ekolo\Framework\Http\Request;
     use Ekolo\Framework\Bootstrap\Middleware;
 
-    // function test(?string $arg) {
-    //     debug($arg);
-    // }
+    $model->find()->where()->and([
+        'id' => 2,
+        'email' => 'ddffff'
+    ]);
 
-    // test(null);
+    $predicate = [
+        'where' => [
+            'and' => [
+                'id' => 2,
+                'nom' => 'bolenge'
+            ],
+            'or' => [
+                'id' => 3,
+                'prenom' => 'mbuyu'
+            ]
+        ]
+    ];
 
-    // di('ddd');
+    $sql = 'SELECT * FROM';
 
-    $router = new Router;
-    // $router->get('/', function ($request, $response) {
-    //     echo "Salut à tous";
-    // });
+    if (!empty($where = $predicate['where'])) {
+        $sql .= ' WHERE ';
+        $i = 1;
+        $valuesExecute = [];
 
-    $router->get('/', 'PagesController@index');
+        if (!empty($where['condition'])) {
+            $field = array_key_last($where['condition']);
+            debug($field);
+            foreach ($where['condition'] as $field => $value) {
+                $valuesExecute[$field] = $value;
+                $sql .= $field.' = :'.$field;
+            }
+        }
 
-    $router->get('/liste', function ($request, $response) {
-        echo "Bonjour";
-    });
+        if (!empty($where['and'])) {
+            $sql .= !empty($where['condition']) ? ' AND ' : '';
+            $sql .= '(';
 
-    $app = new Application;
+            foreach ($where['and'] as $field => $value) {
+                $i++;
+                $valuesExecute[$field] = $value;
+                $addAnd = ($i <= count($where['and'])) ? ' AND ' : '';
+                $sql .= $field.' = :'.$field.$addAnd;
+            }
 
-    // debug($_ENV);
+            $sql .= ')';
+        }
 
-    
+        if (!empty($where['or'])) {
+            $i = 1;
+            $sql .= !empty($where['and']) && ($i <= 2) ? ' OR ' : '';
+            $sql .= '(';
+
+            foreach ($where['or'] as $field => $value) {
+                $i++;
+                $addOr = $i <= count($where['or']) ? ' OR ' : '';
+                $fieldExecute = key_exists($field, $valuesExecute) ? $field.$i : $field;
+                $sql .= $field.' = :'.$fieldExecute.$addOr;
+                $valuesExecute[$fieldExecute] = $value;
+            }
+
+            $sql .= ')';
+        }
+
+        debug($sql);
+
+        $and = !empty($where['and']) ? implode('AND', $where['and']) : '';
+    }
+
+    $users = require './routes/users.php';
 
     $app->middleware('errors', function (Middleware $middleware) {
-        // $middleware->error404();
-        // debug($middleware);
         $middleware->getError();
-        // debug("dddd");
     });
-
     
-    
-    $app->use('/', $router);
-
-    // debug((new Config)->basePath());
-
-    // debug(config('app.APP_NAME'));
-
-    // $reponse = new Response;
-    // // $reponse->setTemplate('layout');
-    // $reponse->render('users/liste', [
-    //     'title' => 'Salut ici'
-    // ]);
+    $app->use('/', $users);

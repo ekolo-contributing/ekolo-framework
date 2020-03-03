@@ -36,3 +36,36 @@
 			return is_array($config) ? $data[$config[1]] : $data;
 		}
 	}
+
+	if (!function_exists('array_key_first')) {
+		/**
+		 * Retourne la première clée du tableau
+		 * @param array $array Le tableau en question
+		 * @return mixed
+		 */
+		function array_key_first(array $array) {
+			if (empty($array)) {
+				throw new \Exception('Le paramètre doit être un tableau non null');
+			}
+
+			$array_keys = array_keys($array);
+			return $array_keys[0];
+		}
+	}
+
+	if (!function_exists('array_key_last')) {
+		/**
+		 * Retourne la dernière clé du tableau
+		 * @param array $array
+		 * @return mixed
+		 */
+		function array_key_last(array $array) {
+			if (empty($array)) {
+				throw new \Exception('Le paramètre doit être un tableau non null');
+			}
+			
+			$array_keys = array_keys($array);
+			$count = count($array_keys);
+			return $array_keys[$count - 1];
+		}
+	}
