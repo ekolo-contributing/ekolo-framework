@@ -5,7 +5,7 @@
     "require": {
         "ekolo/eko-routing": "^0.2.1",
         "ekolo/eko-helpers": "^0.3.1",
-        "ekolo/eko-http": "^0.3.0"
+        "ekolo/eko-http": "^0.3.5"
     },
     "license": "MIT",
     "authors": [
@@ -24,7 +24,7 @@
         "files": ["src/Framework/Functions/helpers.php"],
         "psr-4": {
             "Ekolo\\Framework\\": "src/Framework/",
-            "Ekolo\\App\\": "tests/app/"
+            "Tests\\": "tests/"
         }
     }
 }

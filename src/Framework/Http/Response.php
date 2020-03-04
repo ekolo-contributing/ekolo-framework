@@ -73,7 +73,7 @@
          * @param int $status Le status à renvoyer
          * @param array $headers Les headers à envoyer
          */
-        public function render(string $view, array $vars = [], int $status = 200, array $headers = [])
+        public function render(string $view, array $vars = [], int $status = null, array $headers = [])
         {
             $vars += $this->vars;
 

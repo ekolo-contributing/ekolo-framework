@@ -1,6 +1,6 @@
 <?php
 
-    namespace Ekolo\App\Controllers;
+    namespace Tests\App\Controllers;
 
     use Ekolo\Framework\Bootstrap\Controller;
     use Ekolo\Framework\Http\Request;
