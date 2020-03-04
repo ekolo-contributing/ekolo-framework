@@ -1,6 +1,6 @@
 <?php
 	return [
-		'middleware' => 'Ekolo\\App\\Middleware',
-		'controller' => 'Ekolo\\App\\Controllers',
-		'model' 	 => 'Ekolo\\App\\Models',
+		'middleware' => 'Tests\\App\\Middleware',
+		'controller' => 'Tests\\App\\Controllers',
+		'model' 	 => 'Tests\\App\\Models',
 	];

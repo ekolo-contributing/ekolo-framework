@@ -5,7 +5,7 @@
     "require": {
         "ekolo/eko-routing": "^0.2.1",
         "ekolo/eko-helpers": "^0.3.1",
-        "ekolo/eko-http": "^0.3.5"
+        "ekolo/eko-http": "^0.3.6"
     },
     "license": "MIT",
     "authors": [
