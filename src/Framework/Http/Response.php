@@ -88,9 +88,11 @@
 			$content = ob_get_clean();
 
             require $this->template;
-            
 
-            $this->setStatus($status);
+            if (!empty($status)) {
+                $this->setStatus($status);
+            }
+            
             $this->addHeaders($headers);
         }
     }
