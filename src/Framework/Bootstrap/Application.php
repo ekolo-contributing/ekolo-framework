@@ -57,8 +57,6 @@
             if ($prefixeUri === '/') {
                 if ($route = $router->getRoute($this->request->method(), $this->request->uri())) {
                     $this->getController($route);
-                }else {
-                    $this->trackError(404);
                 }
             }else {
                 if (preg_match($regex, $this->request->uri(), $matches)) {
@@ -72,9 +70,6 @@
                     }else {
                         $this->trackError(404);
                     }
-                }else {
-                    
-                    $this->trackError(404);
                 }
             }
         }
