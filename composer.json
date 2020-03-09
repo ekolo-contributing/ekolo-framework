@@ -4,8 +4,8 @@
     "type": "library",
     "require": {
         "ekolo/eko-routing": "^0.3.6",
-        "ekolo/eko-helpers": "^0.3.3",
-        "ekolo/eko-http": "^0.3.9"
+        "ekolo/eko-helpers": "^0.3.4",
+        "ekolo/eko-http": "^0.3.10"
     },
     "license": "MIT",
     "authors": [

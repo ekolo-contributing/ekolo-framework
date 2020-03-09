@@ -22,14 +22,22 @@
 		/**
 		 * Permet de renvoyer une configuration ou les tableaux de toutes les configuration
 		 * @param string $conf La configuration à trouver
+		 * @param string $default
+		 * @return mixed
+		 * 
 		 */
-		function config(string $conf) {
+		function config(string $conf, string $default = null) {
             $appConfig = new Config;
             $basePath = $appConfig->basePath();
             
 			$config = preg_match('#\.#', $conf) ? explode('.', $conf) : $conf;
 			$fileConf = is_array($config) ? $config[0] : $config;
 			$filenameConf = $basePath.DIRECTORY_SEPARATOR.'config'.DIRECTORY_SEPARATOR.$fileConf.'.php';
+
+			if (!file_exists($filenameConf)) {
+				throw new \Exception('Le fichier de la configuration "'.$fileConf.'" n\'existe pas');
+				
+			}
 
 			$data = require $filenameConf;
 

@@ -8,15 +8,27 @@
 
     use Ekolo\Framework\Http\Request;
     use Ekolo\Framework\Http\Response;
+    use Ekolo\Framework\Bootstrap\Model;
 
     /**
      * Le controlleur principal
      */
     class Controller
     {
+        /**
+         * Les méthodes considerées comme des __contruct des traits
+         */
+        protected $traitsContructs = [];
+
         public function __construct($action, Request $request, Response $response)
         {
-            // $this->loadModel();
+            if (!empty($this->traitsContructs)) {
+                foreach ($this->traitsContructs as $contruct) {
+                    if (is_callable([$this, $contruct])) {
+                        $this->$contruct();
+                    }
+                }
+            }
 
             if (is_callable([$this, $action])) {
                 $this->$action($request, $response);
