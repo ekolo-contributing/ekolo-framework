@@ -48,11 +48,7 @@
 				$this->db = $pdo;
 				
 			} catch (\PDOException $e) {
-				if (DB::$debug >= 1) {
-					die($e->getMessage());
-				}else{
-					die('Impossible de se connecter à la base de données.');
-				}
+				die('Impossible de se connecter à la base de données.');
 			}
 		}
 

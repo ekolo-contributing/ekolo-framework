@@ -9,6 +9,13 @@
 
     $router->get('/', 'PagesController@index');
     $router->get('/liste', function ($request, $response) {
+        session('flash', [
+            'type' => 'info',
+            'message' => "Juste pour un message flash"
+        ]);
+
+        debug(flash()->get('type', "Quoi ooooh"));
+
         echo "Bonjour";
     });
 

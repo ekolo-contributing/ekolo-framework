@@ -4,7 +4,8 @@
      * (c) Don de Dieu BOLENGE <dondedieubolenge@gmail.com>
      */
 
-    use Ekolo\Framework\Bootstrap\Config;
+	use Ekolo\Framework\Bootstrap\Config;
+	use Ekolo\Framework\Utils\Flash;
 
     if (!function_exists('e')) {
 		/**
@@ -77,3 +78,13 @@
 			return $array_keys[$count - 1];
 		}
 	}
+
+	if (!function_exists('flash')) {
+        /**
+         * Permet de manipuler l'objet Ekolo\Framework\Utils\Flash
+		 * @return Flash
+         */
+        function flash() {
+            return new Flash;
+        }
+    }
