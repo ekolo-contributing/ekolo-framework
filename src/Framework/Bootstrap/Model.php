@@ -298,6 +298,10 @@
 			$this->table = $table;
 		}
 
+		/**
+		 * Renvoi le nom de la table du modèle
+		 * @return string $table
+		 */
 		public function table()
 		{
 			return $this->table;

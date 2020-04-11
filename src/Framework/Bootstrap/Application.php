@@ -40,6 +40,8 @@
 
         public function __construct()
         {
+            $this->initializer();
+            
             $this->request = new Request;
             $this->response = new Response;
             $this->router = new Router;
@@ -146,5 +148,15 @@
             $middleware = $this->middlewares['errors']['middleware'];
             $middleware->setError($error);
             $this->middlewares['errors']['callback']($middleware);
+        }
+
+        /**
+         * Permet d'initiliaser des fonctions et autres
+         * @return void
+         */
+        public function initializer()
+        {
+            // Permet d'initiliaser des fonctions
+            initializer();
         }
     }

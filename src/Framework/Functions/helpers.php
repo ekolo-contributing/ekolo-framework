@@ -6,6 +6,18 @@
 
 	use Ekolo\Framework\Bootstrap\Config;
 	use Ekolo\Framework\Utils\Flash;
+	use Ekolo\Framework\Http\Request;
+	use Ekolo\Framework\Http\Response;
+
+	if (!function_exists('initializer')) {
+		/**
+		 * Permet d'initialiser des fonctions ou autres
+		 * @return void
+		 */
+		function initializer() {
+			init_env();
+		}
+	}
 
     if (!function_exists('e')) {
 		/**
@@ -88,3 +100,73 @@
             return new Flash;
         }
     }
+
+    if (!function_exists('base_path')) {
+		/**
+		 * Permet de renvoyer le base path de l'application
+		 * @return string $base_path
+		 */
+		function base_path() {
+            return (new Config)->basePath();
+		}
+	}
+
+	if (!function_exists('env')) {
+		/**
+		 * Permet de renvoyer une env
+		 * @param string $key La clé de l'env
+		 * @param mixed $default La valeur par défaut au cas où l'env n'existe pas
+		 * @return string $env
+		 */
+		function env(string $key, $default = null) {
+			return !empty($_ENV[$key]) ? $_ENV[$key] : $default;
+		}
+	}
+
+	if (!function_exists('init_env')) {
+		/**
+		 * Permet d'initialiser les env
+		 * @return void
+		 */
+		function init_env() {
+			$envs_filename = base_path().DIRECTORY_SEPARATOR.'.env';
+			$envs = $envs_array = [];
+			
+			if ($ressources = fopen($envs_filename, 'r')) {
+				while (!feof($ressources)) {
+					$element = fgets($ressources);
+
+					if (!empty(trim($element))) {
+						$element_array = explode('=', $element);
+						$envs_array[$element_array[0]] = $element_array[1];
+					}
+
+					$envs[] = $element;
+				}
+
+				fclose($ressources);
+			}
+
+			$_ENV = array_merge($envs_array, $_ENV);
+		}
+	}
+
+	if (!function_exists('request')) {
+		/**
+		 * Permet de renvoyer l'instance de Ekolo\Framework\Http\Request
+		 * @return Request $request
+		 */
+		function request() {
+			return new Request;
+		}
+	}
+
+	if (!function_exists('response')) {
+		/**
+		 * Permet de renvoyer l'instance de Ekolo\Framework\Http\Response
+		 * @return Response $response
+		 */
+		function response() {
+			return new Response;
+		}
+	}

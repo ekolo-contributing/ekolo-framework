@@ -8,6 +8,12 @@
 
     class PagesController extends Controller {
 
+        /**
+         * Renvoi à la page d'accueil
+         * @param Request $request L'instance de Ekolo\Framework\Http\Request
+         * @param Response $response L'instance de Ekolo\Framework\Http\Response
+         * @return void
+         */
         public function index(Request $request, Response $response)
         {
             $response->render('users.liste', [
