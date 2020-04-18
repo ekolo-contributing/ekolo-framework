@@ -38,6 +38,18 @@
          */
         protected $router;
 
+        /**
+         * Indique que possible qu'y ait une erreur
+         * @var bool
+         */
+        protected $errorPossible = true;
+
+        /**
+         * Erreur trouvé dans la route courante
+         * @var string|int
+         */
+        protected $error;
+
         public function __construct()
         {
             $this->initializer();
@@ -59,6 +71,8 @@
             if ($prefixeUri === '/') {
                 if ($route = $router->getRoute($this->request->method(), $this->request->uri())) {
                     $this->getController($route);
+                }else {
+                    $this->setError(404);
                 }
             }else {
                 if (preg_match($regex, $this->request->uri(), $matches)) {
@@ -70,7 +84,7 @@
                     if ($route) {
                         $this->getController($route);
                     }else {
-                        $this->trackError(404);
+                        $this->setError(404);
                     }
                 }
             }
@@ -83,21 +97,25 @@
         public function getController(Route $route)
         {
             if ($route->vars()) {
-				if (count($route->vars()) > 0) {
-					$_GET = array_merge($_GET, $route->vars());
-				}
+                if (count($route->vars()) > 0) {
+                    $_GET = array_merge($_GET, $route->vars());
+                }
             }
 
             $action = $route->action();
             
             if (is_callable($action) && $route->controller() == null) {
-                
+                $this->setError('');
+                $this->errorPossible = false;
                 $action($this->request, $this->response);
             }else {
                 $controllerClass = config('namespace.controller').'\\'.ucfirst($route->controller());
                 if (!class_exists($controllerClass)) {
                     throw new \Exception("La classe $controllerClass n'existe pas");
                 }
+
+                $this->setError('');
+                $this->errorPossible = false;
 
                 return new $controllerClass($route->action(), $this->request, $this->response);
             }
@@ -140,14 +158,15 @@
 
         /**
          * Permet de traquer les erreurs à partir du middleware erreurs
-         * @param mixed $error L'erreur à traquer
          * @return void
          */
-        public function trackError($error)
+        public function trackErrors()
         {
-            $middleware = $this->middlewares['errors']['middleware'];
-            $middleware->setError($error);
-            $this->middlewares['errors']['callback']($middleware);
+            if (!empty($this->error)) {
+                $middleware = $this->middlewares['errors']['middleware'];
+                $middleware->setError($this->error);
+                $this->middlewares['errors']['callback']($middleware);
+            }
         }
 
         /**
@@ -158,5 +177,17 @@
         {
             // Permet d'initiliaser des fonctions
             initializer();
+        }
+
+        /**
+         * Permet de modifier l'erreur
+         * @param mixed $error L'erreur
+         * @return void
+         */
+        public function setError($error)
+        {
+            if ($this->errorPossible) {
+                $this->error = $error;
+            }
         }
     }
