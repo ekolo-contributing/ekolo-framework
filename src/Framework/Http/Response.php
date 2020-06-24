@@ -28,7 +28,7 @@
          * Les variables à renvoyer à la vue
          * @var array
          */
-        protected $vars;
+        protected $vars = [];
 
 
         public function __construct()
