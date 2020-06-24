@@ -1,7 +1,7 @@
 {
     "name": "ekolo/ekolo-framework",
     "description": "Framework PHP",
-    "version": "0.3.7",
+    "version": "0.3.8",
     "type": "library",
     "require": {
         "ekolo/eko-routing": "^0.3.6",
