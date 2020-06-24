@@ -12,12 +12,6 @@
      */
     class Response extends HTTPResponse {
 
-        public function __construct()
-        {
-            $this->setTemplate(\config('app.APP_DEFAULT_LAYOUT_PAGE'));
-            parent::__construct();
-        }
-
         /**
          * La vue à afficher
          * @var string
@@ -29,6 +23,19 @@
          * @var string
          */
         protected $template;
+
+        /**
+         * Les variables à renvoyer à la vue
+         * @var array
+         */
+        protected $vars;
+
+
+        public function __construct()
+        {
+            $this->setTemplate(\config('app.APP_DEFAULT_LAYOUT_PAGE'));
+            parent::__construct();
+        }
 
         /**
          * Modifie la vue à afficher
@@ -77,6 +84,8 @@
         {
             $vars += $this->vars;
 
+            $this->setVars($vars);
+
 			if (!empty($vars)) {
 				extract($vars);
 			}
@@ -94,5 +103,24 @@
             }
             
             $this->addHeaders($headers);
+        }
+
+        /**
+         * Modifie les vars
+         * @param array $vars
+         * @return void
+         */
+        public function setVars(array $vars = [])
+        {
+            $this->vars = $vars;
+        }
+
+        /**
+         * Renvoi les vars
+         * @return array $vars
+         */
+        public function vars()
+        {
+            return $this->vars;
         }
     }
